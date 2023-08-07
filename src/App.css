@@ -1,9 +1,10 @@
 * {
   box-sizing: border-box;
+  font-family: sans-serif;
 }
 
 body {
-  font-family: sans-serif;
+
   margin: 20px;
   padding: 0;
   display: flex;
@@ -72,6 +73,26 @@ body {
   padding: 0;
   text-align: center;
   width: 50px;
+}
+
+.square:hover{
+  background: #999;
+}
+
+.turn {
+  margin-bottom: 10px;
+  width:100%;
+  text-align: start;
+  border:solid;
+  border-color: transparent;
+  border-radius: 10px;
+  background-color: #999;
+  padding: 5px;
+}
+
+.turn:hover{
+  background-color: rgb(189, 189, 189);
+  border-color:dimgrey;
 }
 
 .board-row:after {
