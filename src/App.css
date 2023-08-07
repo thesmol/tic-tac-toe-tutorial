@@ -60,6 +60,10 @@ body {
   padding: 0;
 }
 
+li {
+  list-style-type: none;
+}
+
 .square {
   background: #fff;
   border: 1px solid #999;
@@ -75,6 +79,10 @@ body {
   width: 50px;
 }
 
+.square__win{
+  background: #a7ff91;
+}
+
 .square:hover{
   background: #999;
 }
@@ -88,12 +96,28 @@ body {
   border-radius: 10px;
   background-color: #999;
   padding: 5px;
+  font-size: medium;
 }
 
 .turn:hover{
   background-color: rgb(189, 189, 189);
   border-color:dimgrey;
 }
+
+
+.current__turn {
+  margin: 0;
+  margin-bottom: 10px;
+  width:100%;
+  text-align: start;
+  border:solid;
+  border-color: transparent;
+  border-radius: 10px;
+  background-color: #a7ff91;
+  padding: 5px;
+  font-size: medium;
+}
+
 
 .board-row:after {
   clear: both;
