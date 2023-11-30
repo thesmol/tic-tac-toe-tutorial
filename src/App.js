@@ -230,6 +230,7 @@ export default function Game() {
   const currentSquares = currentStep.squares;
   const xIsNext = currentMove % 2 === 0;
   const [difficulty, setDifficulty] = useState('easy');
+  const [isJumping, setIsJumping] = useState(false);
 
   useEffect(() => {
     if (!xIsNext && currentMove < 9 && !isJumping) {
@@ -252,7 +253,10 @@ export default function Game() {
   }
 
   function jumpTo(nextMove) {
-    setCurrentMove(nextMove);
+    if (nextMove % 2 === 0) {
+      setIsJumping(true);
+      setCurrentMove(nextMove);
+    }
   }
 
   const moves = history.map((squares, move) => {
@@ -261,14 +265,14 @@ export default function Game() {
     const row = Math.floor(numberSquare / 3) + 1;
     const col = numberSquare % 3 + 1;
     if (move > 0) {
-      description = "Go to move #" + move + ' (' + row + ', ' + col + ')';
+      description = move % 2 === 0 ? "Go to move #" + move + ' (' + row + ', ' + col + ')' : "Move #" + move + ' (' + row + ', ' + col + ')' ;
     } else if (move === 0) {
       description = "Go to game start";
     }
 
     if (move === currentMove) {
       if (move > 0) {
-        description = "You're at move #" + move + ' (' + row + ', ' + col + ')';
+        description = "Current move #" + move + ' (' + row + ', ' + col + ')';
       } else if (move === 0) {
         description = "Tap square to start!";
       }
@@ -279,8 +283,7 @@ export default function Game() {
         {currentMove === move ? (
           <p className="current__turn">{description}</p>
         ) : (
-          <button className="turn" onClick={() => jumpTo(move)}>{description}</button>
-        )}
+          <button className={(description !== "Go to game start" && move % 2 !== 0) ? "turn" : "turn bot-turn"} onClick={() => jumpTo(move)}>{description}</button>)}
       </li>
     );
   });
