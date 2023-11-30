@@ -99,9 +99,13 @@ li {
   font-size: medium;
 }
 
-.turn:hover{
-  background-color: rgb(189, 189, 189);
-  border-color:dimgrey;
+.bot-turn{
+  background-color: #f5ffca;
+}
+
+.bot-turn:hover{
+  background-color: #faffe6;
+  border-color:#70745d;
 }
 
 
