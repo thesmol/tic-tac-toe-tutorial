@@ -70,6 +70,7 @@ function makeBotMove(squares, difficulty) {
   return null;
 }
 
+// по входной комбинации ходов вычисляется знак победителя, если он определен
 function calculateWinnerXO(squares) {
   const lines = [
     [0, 1, 2],
@@ -91,44 +92,37 @@ function calculateWinnerXO(squares) {
 }
 
 function minimax(squares, depth, isMaximizing) {
+  // Проверяем, есть ли победитель в текущем состоянии игры
   let winner = calculateWinnerXO(squares);
-  if (winner === 'O') return 10 - depth;
-  if (winner === 'X') return depth - 10;
+  if (winner === 'O') return 10 - depth; // Если победил 'O', возвращаем 10 минус глубина
+  if (winner === 'X') return depth - 10; // Если победил 'X', возвращаем глубина минус 10
 
-  if (isBoardFull(squares)) return 0;
+  // Проверяем, заполнено ли поле
+  if (isBoardFull(squares)) return 0; // Если поле заполнено, возвращаем 0 (ничья)
 
-  if (isMaximizing) {
+  // Если игра еще не окончена, начинаем исследовать все возможные ходы
+  if (isMaximizing) { // Если текущий игрок - это 'O' (максимизирующий игрок)
     let bestScore = -Infinity;
     for (let i = 0; i < 9; i++) {
-      if (squares[i] === null) {
-        squares[i] = 'O';
-        let winner = calculateWinnerXO(squares);
-        if (winner) {
-          squares[i] = null;
-          return 10 - depth;
-        }
-        let score = minimax(squares, depth + 1, false);
-        squares[i] = null;
-        bestScore = Math.max(score, bestScore);
+      if (squares[i] === null) { // Если ячейка свободна
+        squares[i] = 'O'; // Делаем ход
+        let score = minimax(squares, depth + 1, false); // Рекурсивно исследуем следующий ход
+        squares[i] = null; // Отменяем ход
+        bestScore = Math.max(score, bestScore); // Обновляем лучший счет, если текущий счет больше
       }
     }
-    return bestScore;
-  } else {
+    return bestScore; // Возвращаем лучший счет для этого хода
+  } else { // Если текущий игрок - это 'X' (минимизирующий игрок)
     let bestScore = Infinity;
     for (let i = 0; i < 9; i++) {
-      if (squares[i] === null) {
-        squares[i] = 'X';
-        let winner = calculateWinnerXO(squares);
-        if (winner) {
-          squares[i] = null;
-          return depth - 10;
-        }
-        let score = minimax(squares, depth + 1, true);
-        squares[i] = null;
-        bestScore = Math.min(score, bestScore);
+      if (squares[i] === null) { // Если ячейка свободна
+        squares[i] = 'X'; // Делаем ход
+        let score = minimax(squares, depth + 1, true); // Рекурсивно исследуем следующий ход
+        squares[i] = null; // Отменяем ход
+        bestScore = Math.min(score, bestScore); // Обновляем лучший счет, если текущий счет меньше
       }
     }
-    return bestScore;
+    return bestScore; // Возвращаем лучший счет для этого хода
   }
 }
 
