@@ -140,15 +140,26 @@ function isBoardFull(squares) {
 }
 
 
-function Square({ value, onSquareClick, isWinningSquare }) {
+function Square({ value, onSquareClick, isWinningSquare, coords }) {
   return (
     <button
       className={isWinningSquare ? "square square__win" : "square"}
       onClick={onSquareClick}
     >
-      {value}
+      <div className="square-content">
+        <div className="square-value">{value}</div>
+        <div className="square-coords">
+          <p style={{fontSize: '8px'}}>{coords[0]} {coords[1]}</p>
+        </div>
+      </div>
     </button>
   );
+}
+const getCoords = index => {
+  const row = Math.floor(index / 3) + 1;
+  const col = index % 3 + 1;
+
+  return [row, col]
 }
 
 function Board({ xIsNext, squares, onPlay }) {
@@ -193,8 +204,10 @@ function Board({ xIsNext, squares, onPlay }) {
   }
 
   const renderSquare = (i) => {
+    const coords = getCoords(i);
     return (
       <Square
+        coords = {coords}
         key={i}
         value={squares[i]}
         onSquareClick={() => handleClick(i)}
@@ -265,7 +278,7 @@ export default function Game() {
     const row = Math.floor(numberSquare / 3) + 1;
     const col = numberSquare % 3 + 1;
     if (move > 0) {
-      description = move % 2 === 0 ? "Go to move #" + move + ' (' + row + ', ' + col + ')' : "Move #" + move + ' (' + row + ', ' + col + ')' ;
+      description = move % 2 === 0 ? "Go to move #" + move + ' (' + row + ', ' + col + ')' : "Move #" + move + ' (' + row + ', ' + col + ')';
     } else if (move === 0) {
       description = "Go to game start";
     }
